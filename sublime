@@ -24,6 +24,28 @@ if [ $1 = 'create' ]; then
 		exit 0
 	fi
 
+elif [ $1 = 'modify' ]; then
+	# Check arguments
+	if [ $# = 4 ]; then
+		if [ -d ~/.template/$2 ]; then
+			if [ $3 = '-f' ]; then
+				cp $4 ~/.template/$2/template
+			elif [ $3 = '-j' ]; then
+				echo -n ":$4" > ~/.template/$2/jump
+			else
+				echo "Unknown modification type"
+				exit 0
+			fi
+		else
+			echo "Invalid template name: $2"
+			exit 0
+		fi
+	else
+		# Command format invalid
+		echo "Format: sublime modify < name > < type > < value >"
+		exit 0
+	fi
+
 # If executable command
 elif [ $1 = '+x' ]; then
 	# Make all files executable and open them
@@ -39,7 +61,6 @@ elif [ "`echo $1 | grep -- --`" != "" ]; then
 
 	# Get the template_type
 	template_type=`echo $1 | sed 's/^..//'`
-	echo $template_type
 
 	# Check if the template exists
 	if [ -d ~/.template/$template_type -a -r ~/.template/$template_type/template ]; then
@@ -47,7 +68,11 @@ elif [ "`echo $1 | grep -- --`" != "" ]; then
 		while [ $# -gt 1 ]; do
 			touch $2
 			cp ~/.template/$template_type/template $2
-			subl $2
+			if [ -r ~/.template/$template_type/jump ]; then
+				subl $2`cat ~/.template/$template_type/jump`
+			else
+				subl $2
+			fi
 			shift
 		done
 	else
