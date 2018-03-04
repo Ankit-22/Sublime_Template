@@ -1,0 +1,51 @@
+#!/bin/bash
+
+if [ $# = 0 ]; then
+	subl
+	exit 0
+fi
+
+if [ $1 = '--cpp' ]; then
+	if [ $# = 1 ]; then
+		cp ~/mytemplates/template.cpp new.cpp
+		subl new.cpp:36:4
+		exit 0
+	else
+		cp ~/mytemplates/template.cpp $2
+		subl $2:36:4
+		exit 0
+	fi
+elif [ $1 = '--c' ]; then
+	if [ $# = 1 ]; then
+		cp ~/mytemplates/template.c new.c
+		subl new.c
+		exit 0
+	else
+		cp ~/mytemplates/template.c $2
+		subl $2
+		exit 0
+	fi
+elif [ $1 = '--java' ]; then
+	if [ $# = 1 ]; then
+		cp ~/mytemplates/template.java new.java
+		subl new.java
+		exit 0
+	else
+		cp ~/mytemplates/template.java $2
+		subl $2
+		exit 0
+	fi
+elif [ $1 = '--py' ]; then
+	if [ $# = 1 ]; then
+		cp ~/mytemplates/template.py new.py
+		subl new.py
+		exit 0
+	else
+		cp ~/mytemplates/template.py $2
+		subl $2
+		exit 0
+	fi
+else
+	exec /opt/sublime_text/sublime_text "$@"
+	exit 0
+fi
