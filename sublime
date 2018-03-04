@@ -5,46 +5,42 @@ if [ $# = 0 ]; then
 	exit 0
 fi
 
-if [ $1 = '--cpp' ]; then
-	if [ $# = 1 ]; then
-		cp ~/mytemplates/template.cpp new.cpp
-		subl new.cpp:36:4
-		exit 0
+if [ ! -d ~/.template ]; then
+	mkdir ~/.template/
+fi
+
+if [ $1 = 'create' ]; then 
+	if [ $# = 3 ]; then
+		mkdir ~/.template/$2
+		cp $3 ~/.template/$2/template
 	else
-		cp ~/mytemplates/template.cpp $2
-		subl $2:36:4
+		echo "Format: sublime create < name > < template file >"
 		exit 0
 	fi
-elif [ $1 = '--c' ]; then
-	if [ $# = 1 ]; then
-		cp ~/mytemplates/template.c new.c
-		subl new.c
-		exit 0
-	else
-		cp ~/mytemplates/template.c $2
+
+elif [ $1 = '+x' ]; then
+	while [ $# -gt 1 ]; do
+		touch $2
+		chmod +x $2
 		subl $2
-		exit 0
-	fi
-elif [ $1 = '--java' ]; then
-	if [ $# = 1 ]; then
-		cp ~/mytemplates/template.java new.java
-		subl new.java
-		exit 0
+		shift
+	done
+
+elif [ "`echo $1 | grep -- --`" != "" ]; then
+	template_type=`echo $1 | sed 's/^..//'`
+	echo $template_type
+	if [ -d ~/.template/$template_type -a -r ~/.template/$template_type/template ]; then
+		while [ $# -gt 1 ]; do
+			touch $2
+			cp ~/.template/$template_type/template $2
+			subl $2
+			shift
+		done
 	else
-		cp ~/mytemplates/template.java $2
-		subl $2
+		echo "Invalid template name: $template_type"
 		exit 0
 	fi
-elif [ $1 = '--py' ]; then
-	if [ $# = 1 ]; then
-		cp ~/mytemplates/template.py new.py
-		subl new.py
-		exit 0
-	else
-		cp ~/mytemplates/template.py $2
-		subl $2
-		exit 0
-	fi
+
 else
 	exec /opt/sublime_text/sublime_text "$@"
 	exit 0
