@@ -1,24 +1,32 @@
 #!/bin/bash
 
+# If no arguments, open sublime
 if [ $# = 0 ]; then
 	subl
 	exit 0
 fi
 
+# If homedirectory missing
 if [ ! -d ~/.template ]; then
-	mkdir ~/.template/
+	echo "Seems that installation is not done properly. Please run install.sh with root permissions first"
 fi
 
-if [ $1 = 'create' ]; then 
+# If create command
+if [ $1 = 'create' ]; then
+	# Check arguments
 	if [ $# = 3 ]; then
+		# Make the name and file pair
 		mkdir ~/.template/$2
 		cp $3 ~/.template/$2/template
 	else
+		# Command format invalid
 		echo "Format: sublime create < name > < template file >"
 		exit 0
 	fi
 
+# If executable command
 elif [ $1 = '+x' ]; then
+	# Make all files executable and open them
 	while [ $# -gt 1 ]; do
 		touch $2
 		chmod +x $2
@@ -26,10 +34,16 @@ elif [ $1 = '+x' ]; then
 		shift
 	done
 
+# If command has a name of template
 elif [ "`echo $1 | grep -- --`" != "" ]; then
+
+	# Get the template_type
 	template_type=`echo $1 | sed 's/^..//'`
 	echo $template_type
+
+	# Check if the template exists
 	if [ -d ~/.template/$template_type -a -r ~/.template/$template_type/template ]; then
+		# Copy the template file and open
 		while [ $# -gt 1 ]; do
 			touch $2
 			cp ~/.template/$template_type/template $2
@@ -37,11 +51,14 @@ elif [ "`echo $1 | grep -- --`" != "" ]; then
 			shift
 		done
 	else
+		# Invalid template
 		echo "Invalid template name: $template_type"
 		exit 0
 	fi
 
+# None of the above arguments
 else
+	# Open sublime with arguments
 	exec /opt/sublime_text/sublime_text "$@"
 	exit 0
 fi
