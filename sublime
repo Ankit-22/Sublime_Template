@@ -6,7 +6,7 @@ if [ $# = 0 ]; then
 	exit 0
 fi
 
-# If homedirectory missing
+# If installation directory missing
 if [ ! -d ~/.template ]; then
 	echo "Seems that installation is not done properly. Please run install.sh with root permissions first"
 fi
@@ -24,19 +24,25 @@ if [ $1 = 'create' ]; then
 		exit 0
 	fi
 
+# If modify command
 elif [ $1 = 'modify' ]; then
 	# Check arguments
 	if [ $# = 4 ]; then
 		if [ -d ~/.template/$2 ]; then
+			# Check modification type
 			if [ $3 = '-f' ]; then
-				cp $4 ~/.template/$2/template
+				# Modify the template
+				cp -f $4 ~/.template/$2/template
 			elif [ $3 = '-j' ]; then
+				# Modify the jump in file
 				echo -n ":$4" > ~/.template/$2/jump
 			else
+				# Type unknown
 				echo "Unknown modification type"
 				exit 0
 			fi
 		else
+			# Template not found
 			echo "Invalid template name: $2"
 			exit 0
 		fi
@@ -45,6 +51,11 @@ elif [ $1 = 'modify' ]; then
 		echo "Format: sublime modify < name > < type > < value >"
 		exit 0
 	fi
+
+# If show command
+elif [ $1 = 'list' ]; then
+	# Show all template names
+	ls -l1 ~/.template/ | grep ^d | awk '{print $NF}'
 
 # If executable command
 elif [ $1 = '+x' ]; then

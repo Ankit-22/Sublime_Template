@@ -5,19 +5,19 @@ This is a tool that can be installed and used in linux to create and load templa
 ### Installation:
 Just execute the install.sh script with root permissions
 
-```bash
+```shell
 sudo ./script.sh
 ```
 ### Usage:
 To create a template just use:
-```bash
+```shell
 sublime create <template_name> <template_file>
 
 # Eg sublime create cpp file.cpp
 ```
 
 To load templates:
-```bash
+```shell
 sublime --<template_name> files....
 
 # All given files will be loaded with the template
@@ -26,7 +26,7 @@ sublime --<template_name> files....
 ```
 
 To make multiple files with executable permissions:
-```bash
+```shell
 sublime +x files....
 
 # All files will be created with executable permissions
@@ -35,7 +35,7 @@ sublime +x files....
 ```
 
 To modify already made template:
-```bash
+```shell
 sublime modify < template_name > < modification_type > < value >
 ```
 
@@ -52,3 +52,8 @@ sublime modify < template_name > < modification_type > < value >
 >	&emsp;&emsp; Value is line:character jump to given 'character' number in given 'line'<br>
 >	&emsp;&emsp; Eg. sublime modify cpp -j 42:2 jumps to 2nd character in 42nd line
 
+To show all the templates:
+
+```shell
+sublime list
+```
