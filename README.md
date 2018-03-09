@@ -61,7 +61,7 @@ sublime list
 To delete a template:
 
 ```shell
-sublime delete <template_name>
+sublime delete < template_name >
 ```
 
 ### Updation:

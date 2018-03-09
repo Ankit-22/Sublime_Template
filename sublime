@@ -71,7 +71,7 @@ elif [ $1 = 'delete' ]; then
 # If show command
 elif [ $1 = 'list' ]; then
 	# Show all template names
-	ls -l1 ~/.template/ | grep ^d | awk '{printf("%s ", $NF)} END{printf "\n"}'
+	ls -l1 ~/.template/ | awk '/^d/ {printf("%s ", $NF)} END{printf "\n"}'
 
 # If executable command
 elif [ $1 = '+x' ]; then
