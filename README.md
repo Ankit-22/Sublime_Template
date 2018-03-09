@@ -57,3 +57,29 @@ To show all the templates:
 ```shell
 sublime list
 ```
+
+To delete a template:
+
+```shell
+sublime delete <template_name>
+```
+
+### Updation:
+To update your script download the new files and execute
+
+```shell
+sudo ./update.sh
+```
+
+### Uninstall:
+To uninstall temlate for a user, execute
+
+```shell
+./uninstall.sh
+```
+
+To remove for all users, execute
+
+```shell
+sudo rm /usr/local/bin/sublime
+```

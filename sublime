@@ -52,6 +52,22 @@ elif [ $1 = 'modify' ]; then
 		exit 0
 	fi
 
+# If delete command
+elif [ $1 = 'delete' ]; then
+	# Check command validity
+	if [ $# = 2 ]; then
+		# Check template availability
+		if [ -d ~/.template/$2 ]; then
+			# Remove template and notify
+			rm -rf ~/.template/$2
+			echo "Removed template: $2"
+		else
+			# Notify unavialable template
+			echo "No such template $2"
+			echo "Use 'sublime list' to see all templates"
+		fi
+	fi
+
 # If show command
 elif [ $1 = 'list' ]; then
 	# Show all template names
