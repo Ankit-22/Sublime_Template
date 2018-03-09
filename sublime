@@ -8,7 +8,7 @@ fi
 
 # If installation directory missing
 if [ ! -d ~/.template ]; then
-	echo "Seems that installation is not done properly. Please run install.sh with root permissions first"
+	mkdir ~/.template
 fi
 
 # If create command
@@ -55,7 +55,7 @@ elif [ $1 = 'modify' ]; then
 # If show command
 elif [ $1 = 'list' ]; then
 	# Show all template names
-	ls -l1 ~/.template/ | grep ^d | awk '{print $NF}'
+	ls -l1 ~/.template/ | grep ^d | awk '{printf("%s ", $NF)} END{printf "\n"}'
 
 # If executable command
 elif [ $1 = '+x' ]; then
