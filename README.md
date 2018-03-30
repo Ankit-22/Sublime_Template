@@ -6,7 +6,7 @@ This is a tool that can be installed and used in linux to create and load templa
 Just execute the install.sh script with root permissions
 
 ```shell
-sudo ./script.sh
+sudo ./install.sh
 ```
 ### Usage:
 To create a template just use:
